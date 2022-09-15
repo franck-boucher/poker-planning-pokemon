@@ -1,0 +1,35 @@
+import { Card } from "./Card";
+
+export type PointCard = string | null;
+const pointCards: PointCard[] = [
+  "0",
+  "1",
+  "2",
+  "3",
+  "5",
+  "8",
+  "13",
+  "21",
+  "34",
+  "55",
+  "89",
+  "?",
+];
+
+interface CardRowProps {
+  selectedCard: PointCard;
+  vote: (num: PointCard) => void;
+}
+export const CardRow = ({ selectedCard, vote }: CardRowProps) => (
+  <div className="flex justify-center items-end gap-2 my-10">
+    {pointCards.map((pointCard) => (
+      <Card
+        key={pointCard}
+        isSelected={pointCard === selectedCard}
+        onClick={() => vote(pointCard)}
+      >
+        {pointCard}
+      </Card>
+    ))}
+  </div>
+);
