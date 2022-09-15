@@ -6,6 +6,7 @@ interface PlayerRowProps {
   top?: boolean;
   bottom?: boolean;
   revealed: boolean;
+  currentPlayerId: string;
 }
 
 export const PlayerRow = ({
@@ -13,6 +14,7 @@ export const PlayerRow = ({
   top,
   bottom,
   revealed,
+  currentPlayerId,
 }: PlayerRowProps) => {
   return (
     <div className="flex gap-10 justify-center">
@@ -20,6 +22,7 @@ export const PlayerRow = ({
         <Player
           key={id}
           {...{ pokemon, pokemonSprite, vote, revealed, top, bottom }}
+          isCurrentPlayer={currentPlayerId === id}
         />
       ))}
     </div>

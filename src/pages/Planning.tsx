@@ -105,7 +105,12 @@ const PlanningPage = ({ playerId }: { playerId: string }) => {
           <div />
 
           <div className="flex flex-col justify-center gap-12">
-            <PlayerRow players={topRow} bottom revealed={revealed} />
+            <PlayerRow
+              players={topRow}
+              bottom
+              revealed={revealed}
+              currentPlayerId={playerId}
+            />
 
             <Board>
               {Array.from(players.values()).every(({ vote }) => !vote) ? (
@@ -117,7 +122,12 @@ const PlanningPage = ({ playerId }: { playerId: string }) => {
               )}
             </Board>
 
-            <PlayerRow players={bottomRow} top revealed={revealed} />
+            <PlayerRow
+              players={bottomRow}
+              top
+              revealed={revealed}
+              currentPlayerId={playerId}
+            />
           </div>
 
           <CardRow vote={vote} selectedCard={player.vote} />

@@ -9,6 +9,7 @@ interface PlayerProps {
   top?: boolean;
   bottom?: boolean;
   revealed: boolean;
+  isCurrentPlayer: boolean;
 }
 export default function Player({
   pokemon,
@@ -17,6 +18,7 @@ export default function Player({
   top = false,
   bottom = false,
   revealed,
+  isCurrentPlayer,
 }: PlayerProps) {
   const mode: SimpleCardProps["mode"] = (() => {
     if (revealed && vote) return "default";
@@ -25,7 +27,7 @@ export default function Player({
   return (
     <div className="flex flex-col gap-4 items-center">
       {top && <SimpleCard mode={mode}>{vote}</SimpleCard>}
-      <Pokemon {...{ pokemon, pokemonSprite }} />
+      <Pokemon {...{ pokemon, pokemonSprite, current: isCurrentPlayer }} />
       {bottom && <SimpleCard mode={mode}>{vote}</SimpleCard>}
     </div>
   );
