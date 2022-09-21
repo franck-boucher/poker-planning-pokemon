@@ -10,7 +10,7 @@ export const PlayerMenu = ({ player }: PlayerMenuProps) => {
   return (
     <span className="relative">
       <Menu>
-        <Menu.Button className="hidden md:flex items-center gap-2 border border-gray-300 rounded-md pr-4 pl-2">
+        <Menu.Button className="hidden md:flex items-center gap-2 border border-gray-300 rounded-md pr-4 pl-2 hover:bg-gray-100">
           <img
             className="h-14 w-14 rounded-full"
             src={player.pokemonSprite}
@@ -27,7 +27,7 @@ export const PlayerMenu = ({ player }: PlayerMenuProps) => {
               <button
                 onClick={() => copy(window.location.href)}
                 className={`${
-                  active ? "bg-zinc-100" : ""
+                  active ? "bg-gray-100" : ""
                 } group flex w-full items-center rounded-md px-4 py-3`}
               >
                 <LinkIcon className="h-6 w-6 mr-2" />
