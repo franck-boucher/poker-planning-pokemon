@@ -1,6 +1,7 @@
 import { LiveMap, LiveObject } from "@liveblocks/client";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { AppTitle } from "../components/AppTitle";
 import { Board } from "../components/Board";
 import { Button } from "../components/Button";
 import { CardRow, PointCard } from "../components/CardRow";
@@ -100,50 +101,70 @@ const PlanningPage = ({ playerId }: { playerId: string }) => {
       : activePlayers;
 
   return (
-    <div className="flex flex-col justify-between flex-1">
-      {player && players && gameInfos ? (
-        <>
-          <div />
+    <>
+      <div className="flex justify-between">
+        <AppTitle />
 
-          <div className="flex flex-col justify-center gap-2 md:gap-6">
-            <PlayerRow
-              players={topRow}
-              bottom
-              revealed={revealed}
-              currentPlayerId={playerId}
-            />
+        {player && players && gameInfos && (
+          <span>
+            <span className="hidden md:flex items-center gap-2 border border-gray-300 rounded-md pr-4 pl-2">
+              <img
+                className="h-14 w-14 rounded-full"
+                src={player.pokemonSprite}
+                alt={player.pokemon}
+                title={player.pokemon}
+              />
+              <span className="text-xl font-bold">{player.pokemon}</span>
+            </span>
+          </span>
+        )}
+      </div>
 
-            <Board>
-              {Array.from(players.values()).every(({ vote }) => !vote) ? (
-                <span className="italic">Please choose your cards</span>
-              ) : (
-                <Button onClick={revealed ? reset : reveal}>
-                  {revealed ? "Reset" : "Reveal"}
-                </Button>
-              )}
-            </Board>
+      <div className="flex flex-col justify-between flex-1">
+        {player && players && gameInfos ? (
+          <>
+            <div />
 
-            <PlayerRow
-              players={bottomRow}
-              top
-              revealed={revealed}
-              currentPlayerId={playerId}
-            />
-          </div>
+            <div className="flex flex-col justify-center gap-2 md:gap-6">
+              <PlayerRow
+                players={topRow}
+                bottom
+                revealed={revealed}
+                currentPlayerId={playerId}
+              />
 
-          <CardRow vote={vote} selectedCard={player.vote} />
+              <Board>
+                {Array.from(players.values()).every(({ vote }) => !vote) ? (
+                  <span className="italic">Please choose your cards</span>
+                ) : (
+                  <Button onClick={revealed ? reset : reveal}>
+                    {revealed ? "Reset" : "Reveal"}
+                  </Button>
+                )}
+              </Board>
 
-          <div />
-        </>
-      ) : (
-        <>
-          <div />
-          <LoadingPokeball />
-          <div />
-          <div />
-        </>
-      )}
-    </div>
+              <PlayerRow
+                players={bottomRow}
+                top
+                revealed={revealed}
+                currentPlayerId={playerId}
+              />
+            </div>
+
+            <CardRow vote={vote} selectedCard={player.vote} />
+
+            <div />
+          </>
+        ) : (
+          <>
+            <div />
+            <LoadingPokeball />
+            <div />
+            <div />
+          </>
+        )}
+      </div>
+    </>
   );
 };
 

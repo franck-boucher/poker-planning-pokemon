@@ -1,7 +1,6 @@
 interface PokemonProps {
   pokemon: string;
   pokemonSprite: string;
-  selected?: boolean;
   current: boolean;
 }
 export default function Pokemon({
