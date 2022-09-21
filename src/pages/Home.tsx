@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-import { Title } from "../components/Title";
 import peter from "../assets/peter.png";
 
 export const Home = () => {

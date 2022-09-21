@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Board } from "../components/Board";
 import { Button } from "../components/Button";
 import { CardRow, PointCard } from "../components/CardRow";
+import { LoadingPokeball } from "../components/LoadingPokeball";
 import { PlayerRow } from "../components/PlayerRow";
 import { RoomProvider, useMap, useObject, useRoom } from "../liveblocks.config";
 import { getPlayerId } from "../utils/playerUtils";
@@ -137,9 +138,7 @@ const PlanningPage = ({ playerId }: { playerId: string }) => {
       ) : (
         <>
           <div />
-          <Board>
-            <span className="italic">Loading...</span>
-          </Board>
+          <LoadingPokeball />
           <div />
           <div />
         </>

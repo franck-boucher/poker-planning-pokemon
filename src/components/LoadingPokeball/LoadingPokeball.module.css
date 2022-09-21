@@ -1,0 +1,108 @@
+.pokeball {
+  box-sizing: border-box;
+  border-color: black;
+  position: relative;
+  width: 50px;
+  height: 50px;
+  top: 50px;
+  left: calc(50% - 25px);
+  animation-name: capture;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+.pokeballTop {
+  height: 25px;
+  width: 50px;
+  background-color: red;
+  border-radius: 25px 25px 0 0;
+  border: 1px solid black;
+  border-bottom-width: 2px;
+  z-index: 1;
+}
+.pokeballBottom {
+  height: 25px;
+  width: 50px;
+  background-color: white;
+  border-radius: 0 0 25px 25px;
+  border: 1px solid black;
+  border-top-width: 2px;
+  z-index: 1;
+}
+.pokeballCenter {
+  position: relative;
+  background-color: white;
+  top: -32px;
+  left: 18px;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  border: 2px solid black;
+  z-index: 2;
+}
+.pokeballButton {
+  position: relative;
+  background-color: white;
+  top: 1px;
+  left: 1px;
+  height: 9px;
+  width: 9px;
+  border-radius: 50%;
+  border: 1px solid black;
+  z-index: 3;
+}
+
+@keyframes capture {
+  10% {
+    transform: rotate(0turn) translate(0px);
+  }
+  25% {
+    transform: translate(calc(1.414 / 2 * 50px), 0) rotate(45deg);
+  }
+  50% {
+    transform: rotate(0turn) translate(0px);
+  }
+  60% {
+    transform: rotate(0turn) translate(0px);
+  }
+  75% {
+    transform: translate(calc(1.414 / 2 * -50px), 0) rotate(-45deg);
+  }
+  100% {
+    transform: translate(0px) rotate(0turn);
+  }
+}
+
+.shadow {
+  position: relative;
+  left: calc(50% - 25px);
+  top: 49px;
+  height: 3px;
+  width: 50px;
+  border-radius: 50%;
+  background-color: black;
+  animation-name: shadow;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  z-index: 0;
+}
+
+@keyframes shadow {
+  10% {
+    transform: translate(0px);
+  }
+  25% {
+    transform: translate(calc(1.414 / 2 * 44px), 0) scale(0.9);
+  }
+  50% {
+    transform: translate(0px);
+  }
+  60% {
+    transform: translate(0px);
+  }
+  75% {
+    transform: translate(calc(1.414 / 2 * -44px), 0) scale(0.9);
+  }
+  100% {
+    transform: translate(0px);
+  }
+}
