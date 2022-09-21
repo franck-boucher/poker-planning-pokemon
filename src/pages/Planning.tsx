@@ -105,7 +105,7 @@ const PlanningPage = ({ playerId }: { playerId: string }) => {
         <>
           <div />
 
-          <div className="flex flex-col justify-center gap-12">
+          <div className="flex flex-col justify-center gap-2 md:gap-6">
             <PlayerRow
               players={topRow}
               bottom
