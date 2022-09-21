@@ -6,6 +6,7 @@ import { Board } from "../components/Board";
 import { Button } from "../components/Button";
 import { CardRow, PointCard } from "../components/CardRow";
 import { LoadingPokeball } from "../components/LoadingPokeball";
+import { PlayerMenu } from "../components/PlayerMenu";
 import { PlayerRow } from "../components/PlayerRow";
 import { RoomProvider, useMap, useObject, useRoom } from "../liveblocks.config";
 import { getPlayerId } from "../utils/playerUtils";
@@ -82,8 +83,6 @@ const PlanningPage = ({ playerId }: { playerId: string }) => {
     }
   };
 
-  console.log("activePlayerIds", activePlayerIds);
-
   const activePlayers = Array.from(players?.values() || []).filter(
     (player) => activePlayerIds.includes(player.id) || player.id === playerId
   );
@@ -107,15 +106,7 @@ const PlanningPage = ({ playerId }: { playerId: string }) => {
 
         {player && players && gameInfos && (
           <span>
-            <span className="hidden md:flex items-center gap-2 border border-gray-300 rounded-md pr-4 pl-2">
-              <img
-                className="h-14 w-14 rounded-full"
-                src={player.pokemonSprite}
-                alt={player.pokemon}
-                title={player.pokemon}
-              />
-              <span className="text-xl font-bold">{player.pokemon}</span>
-            </span>
+            <PlayerMenu player={player} />
           </span>
         )}
       </div>
