@@ -8,7 +8,7 @@ const getPokemonSpeciesUrl = (id: number) =>
 
 const randomNumber = () => Math.floor(Math.random() * 150) + 1;
 
-const randomUntilNotTaken = (takenIds: number[]) => {
+export const randomUntilNotTaken = (takenIds: number[]) => {
   let random = randomNumber();
   while (takenIds.includes(random)) {
     random = randomNumber();
