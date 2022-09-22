@@ -10,6 +10,7 @@ interface PlayerProps {
   bottom?: boolean;
   revealed: boolean;
   isCurrentPlayer: boolean;
+  isSpectator: boolean;
 }
 export default function Player({
   pokemon,
@@ -19,8 +20,10 @@ export default function Player({
   bottom = false,
   revealed,
   isCurrentPlayer,
+  isSpectator,
 }: PlayerProps) {
   const mode: SimpleCardProps["mode"] = (() => {
+    if (isSpectator) return "spectator";
     if (revealed && vote) return "default";
     return !!vote ? "hidden" : "empty";
   })();

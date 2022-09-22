@@ -10,4 +10,5 @@ export type PlayerType = {
   pokemonId: number;
   pokemonSprite: string;
   vote: PointCard;
+  type: "player" | "spectator";
 };

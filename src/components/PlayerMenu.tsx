@@ -1,12 +1,31 @@
 import { Menu } from "@headlessui/react";
-import { ChevronDownIcon, LinkIcon } from "@heroicons/react/24/solid";
+import {
+  ChevronDownIcon,
+  EyeIcon,
+  EyeSlashIcon,
+  LinkIcon,
+} from "@heroicons/react/24/outline";
+import { LiveMap } from "@liveblocks/client";
 import copy from "copy-to-clipboard";
+import { useMap } from "../liveblocks.config";
 import { PlayerType } from "../utils/types";
 
 interface PlayerMenuProps {
   player: PlayerType;
 }
 export const PlayerMenu = ({ player }: PlayerMenuProps) => {
+  const players = useMap("players") as LiveMap<string, PlayerType> | undefined;
+
+  const toggleSpectatorMode = () => {
+    if (players) {
+      players.set(player.id, {
+        ...player,
+        type: player.type === "player" ? "spectator" : "player",
+        vote: null,
+      });
+    }
+  };
+
   return (
     <span className="relative">
       <Menu>
@@ -28,10 +47,28 @@ export const PlayerMenu = ({ player }: PlayerMenuProps) => {
                 onClick={() => copy(window.location.href)}
                 className={`${
                   active ? "bg-gray-100" : ""
-                } group flex w-full items-center rounded-md px-4 py-3`}
+                } group flex w-full items-center rounded-md px-4 py-3 font-semibold`}
               >
-                <LinkIcon className="h-6 w-6 mr-2" />
+                <LinkIcon className="h-6 w-6 mr-4" strokeWidth="1.5" />
                 Copy the link
+              </button>
+            )}
+          </Menu.Item>
+
+          <Menu.Item>
+            {({ active }) => (
+              <button
+                onClick={toggleSpectatorMode}
+                className={`${
+                  active ? "bg-gray-100" : ""
+                } group flex w-full items-center rounded-md px-4 py-3 font-semibold`}
+              >
+                {player.type === "player" ? (
+                  <EyeSlashIcon className="h-6 w-6 mr-4" strokeWidth="1.5" />
+                ) : (
+                  <EyeIcon className="h-6 w-6 mr-4" strokeWidth="1.5" />
+                )}
+                Spectator mode
               </button>
             )}
           </Menu.Item>

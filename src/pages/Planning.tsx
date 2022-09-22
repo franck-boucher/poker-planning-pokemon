@@ -63,6 +63,7 @@ const PlanningPage = ({ playerId }: { playerId: string }) => {
             pokemonId,
             pokemonSprite,
             vote: null,
+            type: "player",
           });
         })
         .catch(console.error);
@@ -166,7 +167,11 @@ const PlanningPage = ({ playerId }: { playerId: string }) => {
               />
             </div>
 
-            <CardRow vote={vote} selectedCard={player.vote} />
+            {player.type === "player" ? (
+              <CardRow vote={vote} selectedCard={player.vote} />
+            ) : (
+              <div />
+            )}
 
             <div />
           </>
