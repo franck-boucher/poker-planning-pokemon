@@ -12,14 +12,25 @@ import { RoomProvider, useMap, useObject, useRoom } from "../liveblocks.config";
 import { getPlayerId } from "../utils/playerUtils";
 import { randomPokemon } from "../utils/pokemonUtils";
 import { GameInfos, PlayerType } from "../utils/types";
+import { useCountdown } from "../utils/useCountdown";
 
 const PlanningPage = ({ playerId }: { playerId: string }) => {
   const gameInfos = useObject("gameInfos") as LiveObject<GameInfos> | undefined;
   const players = useMap("players") as LiveMap<string, PlayerType> | undefined;
   const player = players?.get(playerId);
-  const revealed = gameInfos?.get("revealed") || false;
+  const status = gameInfos?.get("status") || "hidden";
   const [activePlayerIds, setActivePlayers] = useState<string[]>([]);
   const room = useRoom();
+  const { countdown, startCountdown } = useCountdown();
+
+  useEffect(() => {
+    if (players && gameInfos && status === "countdown") {
+      if (countdown === undefined) startCountdown(3);
+      else if (countdown === 0) {
+        gameInfos.set("status", "revealed");
+      }
+    }
+  }, [countdown, status, startCountdown]);
 
   useEffect(() => {
     setActivePlayers(
@@ -59,7 +70,7 @@ const PlanningPage = ({ playerId }: { playerId: string }) => {
   }, [players, playerId]);
 
   const vote = (vote: PointCard) => {
-    if (players && player && !revealed) {
+    if (players && player && status === "hidden") {
       if (player.vote === vote || vote === null) {
         players.set(playerId, { ...player, vote: null });
       } else {
@@ -70,13 +81,13 @@ const PlanningPage = ({ playerId }: { playerId: string }) => {
 
   const reveal = () => {
     if (players && gameInfos) {
-      gameInfos.set("revealed", true);
+      gameInfos.set("status", "countdown");
     }
   };
 
   const reset = () => {
     if (players && gameInfos) {
-      gameInfos.set("revealed", false);
+      gameInfos.set("status", "hidden");
       players.forEach((player) => {
         players.set(player.id, { ...player, vote: null });
       });
@@ -120,24 +131,37 @@ const PlanningPage = ({ playerId }: { playerId: string }) => {
               <PlayerRow
                 players={topRow}
                 bottom
-                revealed={revealed}
+                revealed={status === "revealed"}
                 currentPlayerId={playerId}
               />
 
               <Board>
-                {Array.from(players.values()).every(({ vote }) => !vote) ? (
-                  <span className="italic">Please choose your cards</span>
-                ) : (
-                  <Button onClick={revealed ? reset : reveal}>
-                    {revealed ? "Reset" : "Reveal"}
-                  </Button>
-                )}
+                {(() => {
+                  if (Array.from(players.values()).every(({ vote }) => !vote))
+                    return (
+                      <span className="italic">Please choose your cards</span>
+                    );
+
+                  if (status === "revealed")
+                    return <Button onClick={reset}>Reset</Button>;
+
+                  if (
+                    status === "countdown" &&
+                    countdown !== undefined &&
+                    countdown > 0
+                  )
+                    return (
+                      <span className="font-bold text-xl">{countdown}</span>
+                    );
+
+                  return <Button onClick={reveal}>Reveal</Button>;
+                })()}
               </Board>
 
               <PlayerRow
                 players={bottomRow}
                 top
-                revealed={revealed}
+                revealed={status === "revealed"}
                 currentPlayerId={playerId}
               />
             </div>
@@ -175,7 +199,7 @@ const PlanningWrapper = () => {
       id={id}
       initialPresence={{ playerId }}
       initialStorage={{
-        gameInfos: new LiveObject<GameInfos>({ revealed: false }),
+        gameInfos: new LiveObject<GameInfos>({ status: "hidden" }),
         players: new LiveMap<string, PlayerType>([]),
       }}
     >

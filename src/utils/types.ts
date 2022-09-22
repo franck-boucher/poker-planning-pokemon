@@ -1,7 +1,7 @@
 import { PointCard } from "../components/CardRow";
 
 export type GameInfos = {
-  revealed: boolean;
+  status: "revealed" | "hidden" | "countdown";
 };
 
 export type PlayerType = {
