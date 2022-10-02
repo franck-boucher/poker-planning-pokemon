@@ -138,7 +138,10 @@ const PlanningPage = ({ playerId }: { playerId: string }) => {
 
               <Board>
                 {(() => {
-                  if (Array.from(players.values()).every(({ vote }) => !vote))
+                  if (
+                    status === "hidden" &&
+                    Array.from(players.values()).every(({ vote }) => !vote)
+                  )
                     return (
                       <span className="italic">Please choose your cards</span>
                     );
