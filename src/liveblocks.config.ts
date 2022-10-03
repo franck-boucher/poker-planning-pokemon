@@ -2,7 +2,7 @@ import { createClient } from "@liveblocks/client";
 import { createRoomContext } from "@liveblocks/react";
 
 const client = createClient({
-  publicApiKey: "pk_live_vOBia57xLIdRh_ue4tyk1oEG",
+  publicApiKey: import.meta.env.VITE_LIVEBLOCKS_API_KEY,
 });
 
 export const { RoomProvider, useOthers, useObject, useMap, useRoom } =
