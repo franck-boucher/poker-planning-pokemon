@@ -1,5 +1,6 @@
 import { LiveMap, LiveObject } from "@liveblocks/client";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { AppTitle } from "../components/AppTitle";
 import { Board } from "../components/Board";
@@ -15,6 +16,7 @@ import { GameInfos, PlayerType } from "../utils/types";
 import { useCountdown } from "../utils/useCountdown";
 
 const PlanningPage = ({ playerId }: { playerId: string }) => {
+  const { t } = useTranslation();
   const gameInfos = useObject("gameInfos") as LiveObject<GameInfos> | undefined;
   const players = useMap("players") as LiveMap<string, PlayerType> | undefined;
   const player = players?.get(playerId);
@@ -143,11 +145,15 @@ const PlanningPage = ({ playerId }: { playerId: string }) => {
                     Array.from(players.values()).every(({ vote }) => !vote)
                   )
                     return (
-                      <span className="italic">Please choose your cards</span>
+                      <span className="italic">
+                        {t("planning.pleaseChoose")}
+                      </span>
                     );
 
                   if (status === "revealed")
-                    return <Button onClick={reset}>Reset</Button>;
+                    return (
+                      <Button onClick={reset}>{t("planning.reset")}</Button>
+                    );
 
                   if (
                     status === "countdown" &&
@@ -158,7 +164,9 @@ const PlanningPage = ({ playerId }: { playerId: string }) => {
                       <span className="font-bold text-xl">{countdown}</span>
                     );
 
-                  return <Button onClick={reveal}>Reveal</Button>;
+                  return (
+                    <Button onClick={reveal}>{t("planning.reveal")}</Button>
+                  );
                 })()}
               </Board>
 

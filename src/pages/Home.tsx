@@ -1,3 +1,4 @@
+import { useTranslation, Trans } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import peter from "../assets/peter.png";
@@ -6,6 +7,7 @@ import { SimpleCard } from "../components/Card";
 import { randomUntilNotTaken } from "../utils/pokemonUtils";
 
 export const Home = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const createNew = () => {
@@ -27,14 +29,17 @@ export const Home = () => {
         style={{ backgroundImage: `url(${peter})` }}
       >
         <h2 className="text-xl md:text-3xl font-bold w-3/4">
-          Create a new game and plan like a Pokemon Master!
+          <Trans i18nKey="hompage.title">
+            {"Create a new game and plan like a Pokemon "}
+            <span className="whitespace-nowrap">Master!</span>
+          </Trans>
         </h2>
         <div>
           <button
             className="py-2 px-6 bg-red-700 text-white rounded-md"
             onClick={createNew}
           >
-            New game !
+            {t("hompage.newGame")}
           </button>
         </div>
       </div>
@@ -49,7 +54,10 @@ export const Home = () => {
             </span>
           </div>
           <h3 className="text-lg md:text-2xl font-bold text-center">
-            Play your Poke-cards for your planning!
+            <Trans i18nKey="hompage.pokecards">
+              {"Play your Poke-cards during your "}
+              <span className="whitespace-nowrap">planning!</span>
+            </Trans>
           </h3>
         </div>
 
@@ -66,7 +74,10 @@ export const Home = () => {
             ))}
           </div>
           <h3 className="text-lg md:text-2xl font-bold text-center">
-            With a new random Pokemon at each game!
+            <Trans i18nKey="hompage.randomPokemon">
+              {"With a new random Pokemon at each "}
+              <span className="whitespace-nowrap">game!</span>
+            </Trans>
           </h3>
         </div>
       </div>

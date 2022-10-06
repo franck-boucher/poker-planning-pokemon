@@ -7,6 +7,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { LiveMap } from "@liveblocks/client";
 import copy from "copy-to-clipboard";
+import { useTranslation } from "react-i18next";
 import { useMap } from "../liveblocks.config";
 import { PlayerType } from "../utils/types";
 
@@ -14,6 +15,7 @@ interface PlayerMenuProps {
   player: PlayerType;
 }
 export const PlayerMenu = ({ player }: PlayerMenuProps) => {
+  const { t } = useTranslation();
   const players = useMap("players") as LiveMap<string, PlayerType> | undefined;
 
   const toggleSpectatorMode = () => {
@@ -50,7 +52,7 @@ export const PlayerMenu = ({ player }: PlayerMenuProps) => {
                 } group flex w-full items-center rounded-md px-4 py-3 font-semibold`}
               >
                 <LinkIcon className="h-6 w-6 mr-4" strokeWidth="1.5" />
-                Copy the link
+                {t("menu.copyLink")}
               </button>
             )}
           </Menu.Item>
@@ -68,7 +70,7 @@ export const PlayerMenu = ({ player }: PlayerMenuProps) => {
                 ) : (
                   <EyeIcon className="h-6 w-6 mr-4" strokeWidth="1.5" />
                 )}
-                Spectator mode
+                {t("menu.spectatorMode")}
               </button>
             )}
           </Menu.Item>

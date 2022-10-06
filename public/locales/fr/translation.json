@@ -1,0 +1,20 @@
+{
+  "menu": {
+    "copyLink": "Copier le lien",
+    "spectatorMode": "Mode spectateur"
+  },
+  "hompage": {
+    "title": "Crée une nouvelle partie et planifie comme un Maître <1>Pokémon !</1>",
+    "newGame": "Nouvelle partie !",
+    "pokecards": "Joue tes Poké-cartes durant ton <1>planning !</1>",
+    "randomPokemon": "Avec un nouveau Pokémon aléatoire à chaque <1>partie !</1>"
+  },
+  "planning": {
+    "pleaseChoose": "Merci de choisir vos cartes",
+    "reset": "Réinitialiser",
+    "reveal": "Révéler"
+  },
+  "footer": {
+    "madeBy": "Fait par"
+  }
+}

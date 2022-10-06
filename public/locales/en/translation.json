@@ -1,0 +1,20 @@
+{
+  "menu": {
+    "copyLink": "Copy the link",
+    "spectatorMode": "Spectator mode"
+  },
+  "hompage": {
+    "title": "Create a new game and plan like a Pokemon <1>Master!</1>",
+    "newGame": "New game!",
+    "pokecards": "Play your Poke-cards during your <1>planning!</1>",
+    "randomPokemon": "With a new random Pokemon at each <1>game!</1>"
+  },
+  "planning": {
+    "pleaseChoose": "Please choose your cards",
+    "reset": "Reset",
+    "reveal": "Reveal"
+  },
+  "footer": {
+    "madeBy": "Made by"
+  }
+}
