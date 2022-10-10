@@ -6,12 +6,13 @@ const getPokemonSpriteUrl = (id: number) =>
 const getPokemonSpeciesUrl = (id: number) =>
   `https://pokeapi.co/api/v2/pokemon-species/${id}/`;
 
-const randomNumber = () => Math.floor(Math.random() * 150) + 1;
+const randomNumber = (from: number, to: number) =>
+  Math.floor(Math.random() * to) + from;
 
 export const randomUntilNotTaken = (takenIds: number[]) => {
-  let random = randomNumber();
+  let random = randomNumber(1, 150);
   while (takenIds.includes(random)) {
-    random = randomNumber();
+    random = randomNumber(1, 150);
   }
   return random;
 };
@@ -27,5 +28,7 @@ export const randomPokemon = async (takenIds: number[] = []) => {
   ).name;
   const pokemonId = random;
 
-  return { pokemon, pokemonSprite, pokemonId };
+  const pokemonLvl = randomNumber(1, 100);
+
+  return { pokemon, pokemonSprite, pokemonId, pokemonLvl };
 };

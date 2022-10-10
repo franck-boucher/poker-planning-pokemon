@@ -14,6 +14,9 @@
     "reset": "Réinitialiser",
     "reveal": "Révéler"
   },
+  "pokemon": {
+    "lvl": "Niv."
+  },
   "footer": {
     "madeBy": "Fait par"
   }

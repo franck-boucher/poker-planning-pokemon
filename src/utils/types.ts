@@ -9,6 +9,7 @@ export type PlayerType = {
   pokemon: string;
   pokemonId: number;
   pokemonSprite: string;
+  pokemonLvl: number;
   vote: PointCard;
   type: "player" | "spectator";
 };

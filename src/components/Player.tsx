@@ -5,6 +5,7 @@ import Pokemon from "./Pokemon";
 interface PlayerProps {
   pokemon: string;
   pokemonSprite: string;
+  pokemonLvl: number;
   vote: PointCard;
   top?: boolean;
   bottom?: boolean;
@@ -15,6 +16,7 @@ interface PlayerProps {
 export default function Player({
   pokemon,
   pokemonSprite,
+  pokemonLvl,
   vote,
   top = false,
   bottom = false,
@@ -30,7 +32,9 @@ export default function Player({
   return (
     <div className="flex flex-col gap-4 items-center">
       {top && <SimpleCard mode={mode}>{vote}</SimpleCard>}
-      <Pokemon {...{ pokemon, pokemonSprite, current: isCurrentPlayer }} />
+      <Pokemon
+        {...{ pokemon, pokemonSprite, pokemonLvl, current: isCurrentPlayer }}
+      />
       {bottom && <SimpleCard mode={mode}>{vote}</SimpleCard>}
     </div>
   );

@@ -58,12 +58,13 @@ const PlanningPage = ({ playerId }: { playerId: string }) => {
         ({ pokemonId }) => pokemonId
       );
       randomPokemon(takenIds)
-        .then(({ pokemon, pokemonId, pokemonSprite }) => {
+        .then(({ pokemon, pokemonId, pokemonSprite, pokemonLvl }) => {
           players.set(playerId, {
             id: playerId,
             pokemon,
             pokemonId,
             pokemonSprite,
+            pokemonLvl,
             vote: null,
             type: "player",
           });

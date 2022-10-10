@@ -39,6 +39,9 @@ export const PlayerMenu = ({ player }: PlayerMenuProps) => {
             title={player.pokemon}
           />
           <span className="text-xl font-bold">{player.pokemon}</span>
+          <span className="text-md">
+            {t("pokemon.lvl")} {player.pokemonLvl}
+          </span>
           <ChevronDownIcon className="h-6 w-6" />
         </Menu.Button>
 
