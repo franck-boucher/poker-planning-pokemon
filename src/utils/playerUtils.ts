@@ -1,9 +1,10 @@
 import { v4 as uuidv4 } from "uuid";
+import { localDecrypt, localEncrypt, LocalStorageKeys } from "./localStorage";
 
-export const getPlayerId = () => {
-  const playerId = localStorage.getItem("playerId");
+export const getPlayerId = async () => {
+  const playerId = await localDecrypt(LocalStorageKeys.playerId);
   if (playerId) return playerId;
   const newPlayerId = uuidv4();
-  localStorage.setItem("playerId", newPlayerId);
+  await localEncrypt(LocalStorageKeys.playerId, newPlayerId);
   return newPlayerId;
 };

@@ -202,13 +202,22 @@ const PlanningPage = ({ playerId }: { playerId: string }) => {
 const PlanningWrapper = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [playerId] = useState(() => getPlayerId());
+  const [playerId, setPlayerId] = useState<string>();
+
+  useEffect(() => {
+    getPlayerId()
+      .then(setPlayerId)
+      .catch((error) => {
+        console.error("Error while getting player id", error);
+        navigate("/");
+      });
+  }, [navigate]);
 
   useEffect(() => {
     if (!id) navigate("/");
   }, [id, navigate]);
 
-  if (!id) return null;
+  if (!id || !playerId) return null;
 
   return (
     <RoomProvider
