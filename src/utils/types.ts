@@ -19,3 +19,8 @@ export type PlayerType = PokemonType & {
   vote: PointCard;
   type: "player" | "spectator";
 };
+
+export type PokedexEntry = Pick<
+  PokemonType,
+  "pokemon" | "pokemonId" | "pokemonLvl"
+>;

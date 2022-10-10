@@ -10,7 +10,7 @@ import { LoadingPokeball } from "../components/LoadingPokeball";
 import { PlayerMenu } from "../components/PlayerMenu";
 import { PlayerRow } from "../components/PlayerRow";
 import { RoomProvider, useMap, useObject, useRoom } from "../liveblocks.config";
-import { getPlayerId } from "../utils/playerUtils";
+import { getPlayerId, updatePokedexEntry } from "../utils/playerUtils";
 import { randomPokemon } from "../utils/pokemonUtils";
 import { GameInfos, PlayerType } from "../utils/types";
 import { useCountdown } from "../utils/useCountdown";
@@ -68,6 +68,7 @@ const PlanningPage = ({ playerId }: { playerId: string }) => {
             vote: null,
             type: "player",
           });
+          updatePokedexEntry({ pokemonId, pokemon, pokemonLvl });
         })
         .catch(console.error);
     }

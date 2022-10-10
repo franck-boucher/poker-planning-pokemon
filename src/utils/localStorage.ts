@@ -18,4 +18,5 @@ export const localEncrypt = async (
 
 export const LocalStorageKeys = {
   playerId: "ppp_player_id",
+  pokedex: "ppp_pokedex",
 };

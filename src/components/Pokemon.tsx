@@ -3,13 +3,16 @@ import { usePokeApiLocale } from "../utils/pokemonUtils";
 import { PokemonType } from "../utils/types";
 
 interface PokemonProps extends PokemonType {
-  current: boolean;
+  current?: boolean;
+  withNumberId?: boolean;
 }
 export default function Pokemon({
+  pokemonId,
   pokemon,
   pokemonSprite,
   pokemonLvl,
-  current,
+  current = false,
+  withNumberId = false,
 }: PokemonProps) {
   const { t } = useTranslation();
   const pokeApiLocale = usePokeApiLocale();
@@ -19,6 +22,15 @@ export default function Pokemon({
         current ? "ring-1 ring-gray-800" : "ring-1 ring-gray-300"
       }`}
     >
+      {withNumberId && (
+        <span
+          className={`absolute top-0 left-0 text-xs px-1 rounded-md bg-white ${
+            current ? "ring-1 ring-gray-800" : "ring-1 ring-gray-300"
+          }`}
+        >
+          #{pokemonId}
+        </span>
+      )}
       <img
         src={pokemonSprite}
         alt={pokemon[pokeApiLocale]}

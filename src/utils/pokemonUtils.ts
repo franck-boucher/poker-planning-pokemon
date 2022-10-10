@@ -4,7 +4,7 @@ import { PokemonType } from "./types";
 
 const toJson = (response: Response) => response.json();
 
-const getPokemonSpriteUrl = (id: number) =>
+export const getPokemonSpriteUrl = (id: number) =>
   `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
 
 const getPokemonSpeciesUrl = (id: number) =>
