@@ -7,7 +7,7 @@ export const Footer = () => {
       <span>
         {t("footer.madeBy")}{" "}
         <a className="font-bold" href="https://fboucher.com/" target="_blank">
-          Franck boucher
+          Franck Boucher
         </a>
       </span>
     </footer>
