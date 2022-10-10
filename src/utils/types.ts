@@ -4,12 +4,15 @@ export type GameInfos = {
   status: "revealed" | "hidden" | "countdown";
 };
 
-export type PlayerType = {
-  id: string;
+export type PokemonType = {
   pokemon: string;
   pokemonId: number;
   pokemonSprite: string;
   pokemonLvl: number;
+};
+
+export type PlayerType = PokemonType & {
+  id: string;
   vote: PointCard;
   type: "player" | "spectator";
 };

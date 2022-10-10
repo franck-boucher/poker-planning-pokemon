@@ -1,12 +1,10 @@
+import { PlayerType } from "../utils/types";
 import { SimpleCard, SimpleCardProps } from "./Card";
 import { PointCard } from "./CardRow";
 import Pokemon from "./Pokemon";
 
 interface PlayerProps {
-  pokemon: string;
-  pokemonSprite: string;
-  pokemonLvl: number;
-  vote: PointCard;
+  player: PlayerType;
   top?: boolean;
   bottom?: boolean;
   revealed: boolean;
@@ -14,10 +12,7 @@ interface PlayerProps {
   isSpectator: boolean;
 }
 export default function Player({
-  pokemon,
-  pokemonSprite,
-  pokemonLvl,
-  vote,
+  player,
   top = false,
   bottom = false,
   revealed,
@@ -26,16 +21,14 @@ export default function Player({
 }: PlayerProps) {
   const mode: SimpleCardProps["mode"] = (() => {
     if (isSpectator) return "spectator";
-    if (revealed && vote) return "default";
-    return !!vote ? "hidden" : "empty";
+    if (revealed && player.vote) return "default";
+    return !!player.vote ? "hidden" : "empty";
   })();
   return (
     <div className="flex flex-col gap-4 items-center">
-      {top && <SimpleCard mode={mode}>{vote}</SimpleCard>}
-      <Pokemon
-        {...{ pokemon, pokemonSprite, pokemonLvl, current: isCurrentPlayer }}
-      />
-      {bottom && <SimpleCard mode={mode}>{vote}</SimpleCard>}
+      {top && <SimpleCard mode={mode}>{player.vote}</SimpleCard>}
+      <Pokemon {...{ ...player, current: isCurrentPlayer }} />
+      {bottom && <SimpleCard mode={mode}>{player.vote}</SimpleCard>}
     </div>
   );
 }

@@ -1,9 +1,7 @@
 import { useTranslation } from "react-i18next";
+import { PokemonType } from "../utils/types";
 
-interface PokemonProps {
-  pokemon: string;
-  pokemonSprite: string;
-  pokemonLvl: number;
+interface PokemonProps extends PokemonType {
   current: boolean;
 }
 export default function Pokemon({

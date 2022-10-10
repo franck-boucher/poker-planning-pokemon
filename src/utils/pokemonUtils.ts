@@ -1,3 +1,5 @@
+import { PokemonType } from "./types";
+
 const toJson = (response: Response) => response.json();
 
 const getPokemonSpriteUrl = (id: number) =>
@@ -17,7 +19,9 @@ export const randomUntilNotTaken = (takenIds: number[]) => {
   return random;
 };
 
-export const randomPokemon = async (takenIds: number[] = []) => {
+export const randomPokemon = async (
+  takenIds: number[] = []
+): Promise<PokemonType> => {
   const random = randomUntilNotTaken(takenIds);
 
   const pokemonSprite = getPokemonSpriteUrl(random);

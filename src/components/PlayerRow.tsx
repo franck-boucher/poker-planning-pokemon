@@ -18,20 +18,17 @@ export const PlayerRow = ({
 }: PlayerRowProps) => {
   return (
     <div className="flex gap-10 justify-center">
-      {players.map(({ pokemon, pokemonSprite, pokemonLvl, id, vote, type }) => (
+      {players.map((player) => (
         <Player
-          key={id}
+          key={player.id}
           {...{
-            pokemon,
-            pokemonSprite,
-            pokemonLvl,
-            vote,
+            player,
             revealed,
             top,
             bottom,
           }}
-          isCurrentPlayer={currentPlayerId === id}
-          isSpectator={type === "spectator"}
+          isCurrentPlayer={currentPlayerId === player.id}
+          isSpectator={player.type === "spectator"}
         />
       ))}
     </div>
