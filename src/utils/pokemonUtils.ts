@@ -1,3 +1,5 @@
+import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { PokemonType } from "./types";
 
 const toJson = (response: Response) => response.json();
@@ -27,12 +29,24 @@ export const randomPokemon = async (
   const pokemonSprite = getPokemonSpriteUrl(random);
 
   const pokemonSpecies = await fetch(getPokemonSpeciesUrl(random)).then(toJson);
-  const pokemon = pokemonSpecies.names.find(
+  const fr = pokemonSpecies.names.find(
     (name: any) => name.language.name === "fr"
+  ).name;
+  const en = pokemonSpecies.names.find(
+    (name: any) => name.language.name === "en"
   ).name;
   const pokemonId = random;
 
   const pokemonLvl = randomNumber(1, 100);
 
-  return { pokemon, pokemonSprite, pokemonId, pokemonLvl };
+  return { pokemon: { fr, en }, pokemonSprite, pokemonId, pokemonLvl };
+};
+
+export const usePokeApiLocale = (): "fr" | "en" => {
+  const { i18n } = useTranslation();
+  const locale = useMemo(() => {
+    if (i18n.language.toLowerCase().includes("fr")) return "fr";
+    return "en";
+  }, [i18n.language]);
+  return locale;
 };

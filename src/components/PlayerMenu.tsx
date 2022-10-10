@@ -9,6 +9,7 @@ import { LiveMap } from "@liveblocks/client";
 import copy from "copy-to-clipboard";
 import { useTranslation } from "react-i18next";
 import { useMap } from "../liveblocks.config";
+import { usePokeApiLocale } from "../utils/pokemonUtils";
 import { PlayerType } from "../utils/types";
 
 interface PlayerMenuProps {
@@ -16,6 +17,7 @@ interface PlayerMenuProps {
 }
 export const PlayerMenu = ({ player }: PlayerMenuProps) => {
   const { t } = useTranslation();
+  const pokeApiLocale = usePokeApiLocale();
   const players = useMap("players") as LiveMap<string, PlayerType> | undefined;
 
   const toggleSpectatorMode = () => {
@@ -35,10 +37,12 @@ export const PlayerMenu = ({ player }: PlayerMenuProps) => {
           <img
             className="h-14 w-14 rounded-full"
             src={player.pokemonSprite}
-            alt={player.pokemon}
-            title={player.pokemon}
+            alt={player.pokemon[pokeApiLocale]}
+            title={player.pokemon[pokeApiLocale]}
           />
-          <span className="text-xl font-bold">{player.pokemon}</span>
+          <span className="text-xl font-bold">
+            {player.pokemon[pokeApiLocale]}
+          </span>
           <span className="text-md">
             {t("pokemon.lvl")} {player.pokemonLvl}
           </span>

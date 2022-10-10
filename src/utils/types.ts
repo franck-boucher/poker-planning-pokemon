@@ -5,7 +5,10 @@ export type GameInfos = {
 };
 
 export type PokemonType = {
-  pokemon: string;
+  pokemon: {
+    en: string;
+    fr: string;
+  };
   pokemonId: number;
   pokemonSprite: string;
   pokemonLvl: number;
