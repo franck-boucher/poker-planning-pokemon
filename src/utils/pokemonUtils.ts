@@ -23,28 +23,12 @@ export const randomUntilNotTaken = (takenIds: number[]) => {
   return random;
 };
 
-const getBackDoorPokemon = () => {
-  const [pokemonIdStr, pokemonLvlStr, shinyStr] = window.location.hash
-    .replace("#", "")
-    .split(":");
-  const pokemonId = parseInt(pokemonIdStr, 10);
-  const pokemonLvl = parseInt(pokemonLvlStr, 10);
-  const shiny = shinyStr === "shiny";
-  if (isNaN(pokemonId) || isNaN(pokemonLvl)) return null;
-  return { pokemonId, pokemonLvl, shiny };
-};
-
 export const randomPokemon = async (
   takenIds: number[] = []
 ): Promise<PokemonType> => {
-  const backDoorPokemon = getBackDoorPokemon();
-  const random = backDoorPokemon
-    ? backDoorPokemon.pokemonId
-    : randomUntilNotTaken(takenIds);
+  const random = randomUntilNotTaken(takenIds);
 
-  const shiny = backDoorPokemon
-    ? backDoorPokemon.shiny
-    : randomNumber(1, 100) === 1;
+  const shiny = randomNumber(1, 100) === 1;
   const pokemonSprite = getPokemonSpriteUrl(random, shiny);
 
   const pokemonSpecies = await fetch(getPokemonSpeciesUrl(random)).then(toJson);
@@ -56,9 +40,7 @@ export const randomPokemon = async (
   ).name;
   const pokemonId = random;
 
-  const pokemonLvl = backDoorPokemon
-    ? backDoorPokemon.pokemonLvl
-    : randomNumber(1, 100);
+  const pokemonLvl = randomNumber(1, 100);
 
   return { pokemon: { fr, en }, pokemonSprite, pokemonId, pokemonLvl };
 };
