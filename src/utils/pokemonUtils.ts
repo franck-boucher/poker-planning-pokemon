@@ -4,8 +4,10 @@ import { PokemonType } from "./types";
 
 const toJson = (response: Response) => response.json();
 
-export const getPokemonSpriteUrl = (id: number) =>
-  `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+export const getPokemonSpriteUrl = (id: number, shiny: boolean) =>
+  shiny
+    ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${id}.png`
+    : `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
 
 const getPokemonSpeciesUrl = (id: number) =>
   `https://pokeapi.co/api/v2/pokemon-species/${id}/`;
@@ -26,7 +28,8 @@ export const randomPokemon = async (
 ): Promise<PokemonType> => {
   const random = randomUntilNotTaken(takenIds);
 
-  const pokemonSprite = getPokemonSpriteUrl(random);
+  const shiny = randomNumber(1, 100) === 1;
+  const pokemonSprite = getPokemonSpriteUrl(random, shiny);
 
   const pokemonSpecies = await fetch(getPokemonSpeciesUrl(random)).then(toJson);
   const fr = pokemonSpecies.names.find(
