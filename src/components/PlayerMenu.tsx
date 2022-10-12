@@ -1,5 +1,6 @@
 import { Menu } from "@headlessui/react";
 import {
+  BookOpenIcon,
   ChevronDownIcon,
   EyeIcon,
   EyeSlashIcon,
@@ -62,7 +63,7 @@ export const PlayerMenu = ({ player }: PlayerMenuProps) => {
                     active ? "bg-gray-100" : ""
                   } group flex w-full items-center rounded-md px-4 py-3 font-semibold`}
                 >
-                  <LinkIcon className="h-6 w-6 mr-4" strokeWidth="1.5" />
+                  <BookOpenIcon className="h-6 w-6 mr-4" strokeWidth="1.5" />
                   Pokedex
                 </button>
               )}
