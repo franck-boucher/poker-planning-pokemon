@@ -1,5 +1,5 @@
 import { LiveMap, LiveObject } from "@liveblocks/client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { AppTitle } from "../components/AppTitle";
@@ -24,6 +24,25 @@ const PlanningPage = ({ playerId }: { playerId: string }) => {
   const [activePlayerIds, setActivePlayers] = useState<string[]>([]);
   const room = useRoom();
   const { countdown, startCountdown } = useCountdown();
+  const pokedexUpdated = useRef(false);
+
+  useEffect(() => {
+    if (
+      !pokedexUpdated.current &&
+      player &&
+      players &&
+      status === "revealed" &&
+      activePlayerIds.length >= 1 &&
+      Array.from(players.values()).filter((p) => !!p.vote).length >= 2
+    ) {
+      pokedexUpdated.current = true;
+      updatePokedexEntry({
+        pokemonId: player.pokemonId,
+        pokemon: player.pokemon,
+        pokemonLvl: player.pokemonLvl,
+      });
+    }
+  }, [player, players, status, activePlayerIds]);
 
   useEffect(() => {
     if (players && gameInfos && status === "countdown") {
@@ -68,7 +87,6 @@ const PlanningPage = ({ playerId }: { playerId: string }) => {
             vote: null,
             type: "player",
           });
-          updatePokedexEntry({ pokemonId, pokemon, pokemonLvl });
         })
         .catch(console.error);
     }
