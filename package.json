@@ -13,6 +13,7 @@
     "@heroicons/react": "^2.0.11",
     "@liveblocks/client": "^0.17.11",
     "@liveblocks/react": "^0.17.11",
+    "canvas-confetti": "^1.5.1",
     "copy-to-clipboard": "^3.3.2",
     "i18next": "^21.10.0",
     "i18next-browser-languagedetector": "^6.1.6",
@@ -24,6 +25,7 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@types/canvas-confetti": "^1.4.3",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
     "@types/uuid": "^8.3.4",

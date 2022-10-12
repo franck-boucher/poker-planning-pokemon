@@ -2,6 +2,7 @@ import { LiveMap, LiveObject } from "@liveblocks/client";
 import { useEffect, useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
+import confetti from "canvas-confetti";
 import { AppTitle } from "../components/AppTitle";
 import { Board } from "../components/Board";
 import { Button } from "../components/Button";
@@ -21,10 +22,43 @@ const PlanningPage = ({ playerId }: { playerId: string }) => {
   const players = useMap("players") as LiveMap<string, PlayerType> | undefined;
   const player = players?.get(playerId);
   const status = gameInfos?.get("status") || "hidden";
-  const [activePlayerIds, setActivePlayers] = useState<string[]>([]);
+  const [otherActivePlayerIds, setOtherActivePlayers] = useState<string[]>([]);
   const room = useRoom();
   const { countdown, startCountdown } = useCountdown();
   const pokedexUpdated = useRef(false);
+  const confettied = useRef(true);
+
+  useEffect(() => {
+    if (status === "countdown" && confettied.current) {
+      confettied.current = false;
+    }
+  }, [status]);
+
+  useEffect(() => {
+    if (
+      !confettied.current &&
+      player &&
+      players &&
+      otherActivePlayerIds.length >= 1 &&
+      status === "revealed"
+    ) {
+      const activePlayers = [
+        ...(otherActivePlayerIds
+          .map((id) => players.get(id))
+          .filter((p) => p !== undefined) as PlayerType[]),
+        player,
+      ].filter((p) => p.type !== "spectator");
+
+      if (
+        activePlayers.length > 1 &&
+        activePlayers[0].vote !== undefined &&
+        activePlayers.every((p) => p.vote === activePlayers[0].vote)
+      ) {
+        confettied.current = true;
+        confetti();
+      }
+    }
+  }, [player, players, otherActivePlayerIds, status]);
 
   useEffect(() => {
     if (
@@ -32,7 +66,7 @@ const PlanningPage = ({ playerId }: { playerId: string }) => {
       player &&
       players &&
       status === "revealed" &&
-      activePlayerIds.length >= 1 &&
+      otherActivePlayerIds.length >= 1 &&
       Array.from(players.values()).filter((p) => !!p.vote).length >= 2
     ) {
       pokedexUpdated.current = true;
@@ -42,7 +76,7 @@ const PlanningPage = ({ playerId }: { playerId: string }) => {
         pokemonLvl: player.pokemonLvl,
       });
     }
-  }, [player, players, status, activePlayerIds]);
+  }, [player, players, status, otherActivePlayerIds]);
 
   useEffect(() => {
     if (players && gameInfos && status === "countdown") {
@@ -54,14 +88,14 @@ const PlanningPage = ({ playerId }: { playerId: string }) => {
   }, [countdown, status, startCountdown]);
 
   useEffect(() => {
-    setActivePlayers(
+    setOtherActivePlayers(
       room
         .getOthers()
         .toArray()
         .map((other) => other.presence!.playerId as string)
     );
     const unsubscribe = room.subscribe("others", (others) => {
-      setActivePlayers(
+      setOtherActivePlayers(
         others
           .toArray()
           .filter((other) => !!other.presence)
@@ -118,7 +152,8 @@ const PlanningPage = ({ playerId }: { playerId: string }) => {
   };
 
   const activePlayers = Array.from(players?.values() || []).filter(
-    (player) => activePlayerIds.includes(player.id) || player.id === playerId
+    (player) =>
+      otherActivePlayerIds.includes(player.id) || player.id === playerId
   );
 
   const topRow =
